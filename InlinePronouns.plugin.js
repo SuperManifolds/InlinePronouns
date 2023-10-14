@@ -67,8 +67,6 @@ module.exports = !global.ZeresPluginLibrary ? Dummy : (([Plugin, Api]) => {
 			}
 		};
 
-		WebpackModules.getByProps('fetchProfile')
-
 		const BotTag = getMangled(m => m?.toString && m.toString().includes('BOT_TAG_BOT'));
 		const UNIQUE_TAG = 'PronounTag';
 
@@ -79,7 +77,6 @@ module.exports = !global.ZeresPluginLibrary ? Dummy : (([Plugin, Api]) => {
 
 		return class extends Plugin {
 			constructor(meta) {
-
 				super(meta)
 				this.meta = meta
 				this.defaultSettings = {}
@@ -111,7 +108,7 @@ module.exports = !global.ZeresPluginLibrary ? Dummy : (([Plugin, Api]) => {
 					decorations[1].unshift(React.createElement(BotTag[0][BotTag[1]], {
 						className: `${Selectors.BotTag.botTagCozy} ${UNIQUE_TAG}`,
 						useRemSizes: true,
-						type: 'IN_VOICE',
+						type: 'PRONOUNS',
 						pronouns: result.pronouns
 					}));
 				});
@@ -122,8 +119,6 @@ module.exports = !global.ZeresPluginLibrary ? Dummy : (([Plugin, Api]) => {
 					if (!value.props?.className?.includes(UNIQUE_TAG)) return;
 
 					const TagContainer = Utilities.findInReactTree(value, e => e.children?.some(c => typeof c?.props?.children === 'string'));
-
-					console.log(args)
 					TagContainer.children.find(c => typeof c?.props?.children === 'string').props.children = args[0].pronouns;
 				});
 			}
